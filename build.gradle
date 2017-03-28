@@ -12,6 +12,8 @@ repositories {
 }
 import static org.ajoberstar.gradle.git.release.semver.StrategyUtil.*
 import org.ajoberstar.gradle.git.release.semver.*
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+
 def branchName = grgit.branch.current.name
 println "BranchName: " + branchName
 release {
