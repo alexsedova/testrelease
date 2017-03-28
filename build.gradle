@@ -27,7 +27,7 @@ release {
                         !state.isRepoDirty() &&
                         project.gradle.startParameter.taskNames.find { it == 'release' }
             },
-            preReleaseStrategy: StrategyUtil.all({ it.copyWith(inferredPreRelease: 'intergation') } as PartialSemVerStrategy,
+            preReleaseStrategy: StrategyUtil.all({ it.copyWith(inferredPreRelease: 'rc') } as PartialSemVerStrategy,
                     Strategies.PreRelease.STAGE_FLOAT)
     )
 }
