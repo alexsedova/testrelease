@@ -19,8 +19,8 @@ println "BranchName: " + branchName
 release {
     // replace the default strategy to add '-FINAL' to the version
     versionStrategy semanticRelease.releaseStrategy.copyWith (
-        preReleaseStrategy:
-                StrategyUtil.all({it.copyWith(inferredPreRelease: 'FINAL')} as PartialSemVerStrategy, Strategies.PreRelease.STAGE_FLOAT)
+            normalStrategy:
+                StrategyUtil.all({it.copyWith(inferredNormal: branchName)} as PartialSemVerStrategy, Strategies.Normal.USE_SCOPE_PROP)
     )
 }
 
