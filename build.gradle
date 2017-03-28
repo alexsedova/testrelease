@@ -20,7 +20,7 @@ release {
     // replace the default strategy to add '-FINAL' to the version
     versionStrategy semanticRelease.releaseStrategy.copyWith (
         preReleaseStrategy:
-                StrategyUtil.all({it.copyWith(inferredPreRelease: 'FINAL')}, Strategies.PreRelease.STAGE_FLOAT)
+                StrategyUtil.all({it.copyWith(inferredPreRelease: 'FINAL')} as PartialSemVerStrategy, Strategies.PreRelease.STAGE_FLOAT)
     )
 }
 
