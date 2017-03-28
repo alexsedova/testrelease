@@ -16,8 +16,8 @@ import org.ajoberstar.gradle.git.release.semver.*
 release {
     // replace the default strategy to add '-FINAL' to the version
     versionStrategy semanticRelease.releaseStrategy.copyWith (
-            normalStrategy:
-            StrategyUtil.all({it.copyWith(inferredNormal: 'FINAL')} as PartialSemVerStrategy)
+        preReleaseStrategy:
+            {it.copyWith(inferredPreRelease: 'FINAL')}
     )
 }
 
