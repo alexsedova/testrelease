@@ -17,12 +17,21 @@ import org.ajoberstar.gradle.git.release.opinion.Strategies
 def branchName = grgit.branch.current.name
 println "BranchName: " + branchName
 release {
-    // replace the default strategy to add '-FINAL' to the version
-    versionStrategy semanticRelease.releaseStrategy.copyWith (
-            normalStrategy:
-                StrategyUtil.all({it.copyWith(inferredNormal: branchName)} as PartialSemVerStrategy, Strategies.Normal.USE_SCOPE_PROP)
+    versionStrategy semanticRelease.releaseStrategy.copyWith(
+            // the type is important, without type you would again replace the default strategy
+            type: 'rc',
+            selector: { SemVerStrategyState state ->
+                state.currentBranch.name ==~ /integration.*/ &&
+                        semanticRelease.semanticStrategy.canRelease(state) &&
+                        state.nearestVersion.distanceFromAny &&
+                        !state.isRepoDirty() &&
+                        project.gradle.startParameter.taskNames.find { it == 'release' }
+            },
+            preReleaseStrategy: StrategyUtil.all({ it.copyWith(inferredPreRelease: 'intergation') } as PartialSemVerStrategy,
+                    Strategies.PreRelease.STAGE_FLOAT)
     )
 }
+
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
