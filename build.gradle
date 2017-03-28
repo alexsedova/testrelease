@@ -1,9 +1,23 @@
+plugins {
+    id 'de.gliderpilot.semantic-release' version '1.2.0'
+}
+
 group 'com.praqma'
 
 apply plugin: 'groovy'
 
 repositories {
     mavenCentral()
+}
+
+release {
+    // replace the default strategy to add '-FINAL' to the version
+    versionStrategy semanticRelease.releaseStrategy.copyWith (
+        preReleaseStrategy:
+        {
+            it.copyWith(inferredPreRelease: 'FINAL')
+        }
+    )
 }
 
 dependencies {
