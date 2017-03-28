@@ -1,4 +1,5 @@
 plugins {
+    id 'org.ajoberstar.grgit' version '1.5.1'
     id 'de.gliderpilot.semantic-release' version '1.2.0'
 }
 
@@ -9,14 +10,14 @@ apply plugin: 'groovy'
 repositories {
     mavenCentral()
 }
+import static org.ajoberstar.gradle.git.release.semver.StrategyUtil.*
+import org.ajoberstar.gradle.git.release.semver.*
 
 release {
     // replace the default strategy to add '-FINAL' to the version
     versionStrategy semanticRelease.releaseStrategy.copyWith (
         preReleaseStrategy:
-        {
-            it.copyWith(inferredPreRelease: 'FINAL')
-        }
+            StrategyUtil.all({it.copyWith(inferredPreRelease: 'FINAL')} as PartialSemVerStrategy)
     )
 }
 
