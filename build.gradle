@@ -12,12 +12,13 @@ repositories {
 }
 import static org.ajoberstar.gradle.git.release.semver.StrategyUtil.*
 import org.ajoberstar.gradle.git.release.semver.*
-
+def branchName = grgit.branch.current.name
+println "BranchName: " + branchName
 release {
     // replace the default strategy to add '-FINAL' to the version
     versionStrategy semanticRelease.releaseStrategy.copyWith (
         preReleaseStrategy:
-            {it.copyWith(inferredPreRelease: 'FINAL')}
+                StrategyUtil.all({it.copyWith(inferredPreRelease: 'FINAL')}, Strategies.PreRelease.STAGE_FLOAT)
     )
 }
 
